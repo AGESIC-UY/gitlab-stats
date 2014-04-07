@@ -10,7 +10,7 @@ from datetime import datetime
 try:
     from local_settings import GITLAB_LOG_PATH
 except ImportError:
-    GITLAB_LOG_PATH = '/home/git/gitlab/'
+    GITLAB_LOG_PATH = '/home/git/gitlab/log/'
 
 
 # pattern definition
