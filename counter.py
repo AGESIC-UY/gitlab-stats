@@ -1,10 +1,17 @@
 import re
 import gzip
 from os import listdir
+from os import path
 from collections import Counter
 from itertools import chain
 from fnmatch import fnmatch
 from datetime import datetime
+
+try:
+    from local_settings import GITLAB_LOG_PATH
+except ImportError:
+    GITLAB_LOG_PATH = '/home/git/gitlab/'
+
 
 # pattern definition
 patterns = [re.compile(pattern) for pattern in (
@@ -20,15 +27,17 @@ patterns = [re.compile(pattern) for pattern in (
 results = []
 
 # compressed logs
-for f in listdir('.'):
+for f in listdir(GITLAB_LOG_PATH):
     if fnmatch(f, 'production.log.*.gz'):
 	contents = gzip.open(f).read()
-        results += chain.from_iterable(re.findall(pattern, contents) for pattern in patterns)
+        results += chain.from_iterable(re.findall(pattern, contents) for \
+            pattern in patterns)
 
 # non compressed logs
 for f in ('production.log', 'production.log.1'):
-    contents = open(f).read()
-    results += chain.from_iterable(re.findall(pattern, contents) for pattern in patterns)
+    contents = open(path.join(GITLAB_LOG_PATH, f)).read()
+    results += chain.from_iterable(re.findall(pattern, contents) for \
+        pattern in patterns)
 
 # print results
 print('Namespace/Project\tDownloads\tLast activity')
