@@ -29,7 +29,7 @@ results = []
 # compressed logs
 for f in listdir(GITLAB_LOG_PATH):
     if fnmatch(f, 'production.log.*.gz'):
-        contents = gzip.open(f).read()
+        contents = gzip.open(path.join(GITLAB_LOG_PATH, f)).read()
         results += chain.from_iterable(re.findall(pattern, contents) for \
             pattern in patterns)
 
