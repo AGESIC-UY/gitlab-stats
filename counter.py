@@ -1,17 +1,23 @@
 import re
 import gzip
+import smtplib
 from os import listdir
 from os import path
 from collections import Counter
 from itertools import chain
 from fnmatch import fnmatch
 from datetime import datetime
+from email.mime.text import MIMEText
+
+# default settings
+GITLAB_LOG_PATH = '/home/git/gitlab/log/'
+SMTP_HOST = 'localhost'
+SMTP_PORT = 25
 
 try:
-    from local_settings import GITLAB_LOG_PATH
+    from local_settings import *
 except ImportError:
-    GITLAB_LOG_PATH = '/home/git/gitlab/log/'
-
+    pass
 
 # pattern definition
 patterns = [re.compile(pattern) for pattern in (
@@ -39,8 +45,15 @@ for f in ('production.log', 'production.log.1'):
     results += chain.from_iterable(re.findall(pattern, contents) for \
         pattern in patterns)
 
-# print results
-print('Namespace/Project\tDownloads\tLast activity')
+# build and send results
+body = 'Namespace/Project\tDownloads\tLast activity\n'
 for project, count in Counter(x[0] for x in results).most_common():
-    print('%s\t%d\t%s' % (project, count, max(datetime.strptime(x[1],
-        '%Y-%m-%d').date() for x in results if x[0]==project)))
+    body += '%s\t%d\t%s\n' % (project, count, max(datetime.strptime(x[1],
+        '%Y-%m-%d').date() for x in results if x[0]==project))
+msg = MIMEText(body)
+msg['Subject'] = 'gitLab stats'
+msg['From'] = EMAIL_FROM
+msg['To'] = EMAIL_TO
+s = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
+s.sendmail(EMAIL_FROM, [EMAIL_TO], msg.as_string())
+s.quit()
