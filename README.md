@@ -1,10 +1,10 @@
-= gitLab activity statistics =
+# gitLab activity statistics
 
-This Python script (counter.py) parses gitLab's log files and count those lines which define a download / clone / pull / fetch in a project.
+This Python script (`counter.py`) parses gitLab's log files and count those lines which define a download / clone / pull / fetch in a project.
 
 The results are sent by email using the settings defined in `local_settings.py`.
 
-== Testing ==
+## Testing
 
 You can test the script starting a SMTP daemon with Python with any user on a port greater than 1024, example:
 
