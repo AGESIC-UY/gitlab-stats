@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+# Software Publico Uruguayo http://softwarepublico.gub.uy/
+# Script to parse logs and send GitLab access stats.
+# Anibal Pacheco <anibal.pacheco@agesic.gub.uy> AGESIC 2014, 2015
+
 import re
 import gzip
 import smtplib
@@ -35,13 +40,13 @@ results = []
 
 # compressed logs
 for f in listdir(GITLAB_LOG_PATH):
-    if fnmatch(f, 'production.log.*.gz'):
+    if fnmatch(f, 'production.log-*.gz'):
         contents = gzip.open(path.join(GITLAB_LOG_PATH, f)).read()
         results += chain.from_iterable(re.findall(pattern, contents) for \
             pattern in patterns)
 
 # non compressed logs
-for f in ('production.log', 'production.log.1'):
+for f in ('production.log', ):
     contents = open(path.join(GITLAB_LOG_PATH, f)).read()
     results += chain.from_iterable(re.findall(pattern, contents) for \
         pattern in patterns)

@@ -4,6 +4,10 @@ This Python script (`counter.py`) parses gitLab's log files and count those line
 
 The results are sent by email using the settings defined in `local_settings.py`.
 
+## Dependencies
+
+* Python 2.7.3+
+
 ## Testing
 
 You can test the script starting a SMTP daemon with Python with any user on a port greater than 1024, example:
