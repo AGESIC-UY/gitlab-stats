@@ -1,4 +1,13 @@
-# gitLab activity statistics
+# GitLab Stats
+
+Es un script para obtener estadísticas de acceso y descarga de los proyectos de GitLab. Con base en los archivos de log de GitLab, este script obtiene estadísticas de la cantidad de accesos y descargas en cada proyecto y 
+envía un email con los resultados. 
+
+Características técnicas:
+Escrito en Python, se ejecuta en cualquier entorno que tenga Python instalado y con acceso a los logs de GitLab.
+Licencia compatible con Software Público Uruguayo
+
+---------------------------------
 
 This Python script (`counter.py`) parses gitLab's log files and count those lines which define a download / clone / pull / fetch in a project.
 
@@ -22,3 +31,4 @@ After setting the correct values in `local_settings.py` you can execute the scri
 Software Público Uruguayo.
 Aníbal Pacheco, AGESIC
 April 2014
+
