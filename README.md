@@ -1,4 +1,4 @@
-# GitLab Stats
+# GitLab Stats [Sin Mantenimiento]
 
 Es un script para obtener estadísticas de acceso y descarga de los proyectos de GitLab. Con base en los archivos de log de GitLab, este script obtiene estadísticas de la cantidad de accesos y descargas en cada proyecto y 
 envía un email con los resultados. 
